@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouter, Router } from "next/navigation";
 
 import { Separator } from "../ui/separator";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,7 @@ import ImageUpload from "../custom.ui/imageUpload"; // Ensure this path is corre
 const formSchema = z.object({
     title: z.string().min(2).max(20),
     description: z.string().min(2).max(500).trim(),
-    image: z.array(z.string()).optional(), // Make image field optional
+    image: z.string()
 });
 
 const CollectionForm = () => {
@@ -31,7 +30,7 @@ const CollectionForm = () => {
         defaultValues: {
             title: "",
             description: "",
-            image: [],
+            image: "",
         },
     });
 
@@ -83,16 +82,11 @@ const CollectionForm = () => {
                             <FormItem>
                                 <FormLabel>Image</FormLabel>
                                 <FormControl>
-                                    <ImageUpload
-                                        value={field.value || []} // Must contain the uploaded image URLs
-                                        onChange={(url) => {
-                                            console.log("Updated form value:", [...(field.value || []), url]); // Debug log
-                                            field.onChange([...(field.value || []), url]);
-                                        }}
-                                        onRemove={(url) => {
-                                            const updated = (field.value || []).filter((item: string) => item !== url);
-                                            field.onChange(updated);
-                                        }}
+                                    <ImageUpload 
+                                    value ={field.value ? [field.value] : []} 
+                                    onChange={(url) => field.onChange(url)} 
+                                    onRemove={() => field.onChange("")}
+                                    
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -100,7 +94,7 @@ const CollectionForm = () => {
                         )}
                     />
                     <div className ="flex gap-6"><Button type="submit" className="bg-blue-1 text-white">Submit</Button>
-                        <Button type="button" onClick={() => Router.push("/collect")} className="bg-blue-1 text-white">Discard</Button>
+                        {/* <Button type="button" onClick={() => Router.push("/collect")} className="bg-blue-1 text-white">Discard</Button> */}
 
                     </div>
                 </form>

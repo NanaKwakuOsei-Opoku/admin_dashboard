@@ -14,6 +14,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     onRemove,
     value,
 }) => {
+    
     const onUpload = (result: any) => {
         console.log("Upload response:", result); // Log the full response
         if (result.info?.secure_url) {
