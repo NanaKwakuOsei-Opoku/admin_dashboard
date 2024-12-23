@@ -3,17 +3,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
+import { useRouter, Router } from "next/navigation";
 
 import { Separator } from "../ui/separator";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
@@ -22,7 +22,7 @@ import ImageUpload from "../custom.ui/imageUpload"; // Ensure this path is corre
 const formSchema = z.object({
     title: z.string().min(2).max(20),
     description: z.string().min(2).max(500).trim(),
-    image: z.array(z.string()).nonempty(),
+    image: z.array(z.string()).optional(), // Make image field optional
 });
 
 const CollectionForm = () => {
@@ -36,6 +36,10 @@ const CollectionForm = () => {
     });
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        if (values.image.length === 0) {
+            alert("Please upload at least one image.");
+            return;
+        }
         console.log(values);
     };
 
@@ -80,16 +84,25 @@ const CollectionForm = () => {
                                 <FormLabel>Image</FormLabel>
                                 <FormControl>
                                     <ImageUpload
-                                        value={field.value}
-                                        onChange={(url) => field.onChange([...field.value, url])}
-                                        onRemove={(url) => field.onChange(field.value.filter((v) => v !== url))}
+                                        value={field.value || []} // Must contain the uploaded image URLs
+                                        onChange={(url) => {
+                                            console.log("Updated form value:", [...(field.value || []), url]); // Debug log
+                                            field.onChange([...(field.value || []), url]);
+                                        }}
+                                        onRemove={(url) => {
+                                            const updated = (field.value || []).filter((item: string) => item !== url);
+                                            field.onChange(updated);
+                                        }}
                                     />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Submit</Button>
+                    <div className ="flex gap-6"><Button type="submit" className="bg-blue-1 text-white">Submit</Button>
+                        <Button type="button" onClick={() => Router.push("/collect")} className="bg-blue-1 text-white">Discard</Button>
+
+                    </div>
                 </form>
             </Form>
         </div>
