@@ -1,24 +1,32 @@
 import mongoose from "mongoose";
 
-let isConnected: boolean = false;
-
-export const connectToDB = async(): Promise<void> => {
-    mongoose.set("strictQuery", true);
-
-    if (isConnected) {
-        console.log("MongoDB is already connected");
-        return;
+const collectionSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  description: String,
+  image: {
+    type: String,
+    required: true,
+  },
+  products: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
     }
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  }
+})
 
-    try {
-        await mongoose.connect(process.env.MONGODB_URL || "", {
-            dbName: "Guitar Hub"
-        });
+const Collection =mongoose.models.Collection || mongoose.model("Collection", collectionSchema);
 
-        isConnected = true;
-        console.log("MongoDB is connected ");
-
-    } catch (err) {
-        console.log(err);
-    }
-};
+export default Collection;
