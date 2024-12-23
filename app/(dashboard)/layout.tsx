@@ -1,23 +1,14 @@
-    import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "../globals.css";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs'
+import Leftsidebar from "@/components/Layout/Leftsidebar";
+import TopBar from "@/components/Layout/TopBar";
+import type { JSX } from 'react';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"], });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+
 
 export const metadata: Metadata = {
   title: "Guitar Hub - Dashboard",
@@ -28,16 +19,18 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>): JSX.Element {
   return (
     <ClerkProvider>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+      <html lang="en">
+        <body className={inter.className}>
+          <div className='flex max-1g:flex-col'>
+            <Leftsidebar />
+            <TopBar />
+            <div className='flex-1'>{children}</div>
+          </div>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
