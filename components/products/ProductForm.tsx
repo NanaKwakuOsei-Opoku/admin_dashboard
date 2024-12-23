@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import ImageUpload from "../custom.ui/imageUpload"; // Ensure this path is correct
@@ -39,7 +40,7 @@ interface CollectionFormProps {
   initialData?: CollectionType | null; //Must have "?" to make it optional
 }
 
-const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
+const ProductForm: React.FC<CollectionFormProps> = ({ initialData }) => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
@@ -157,4 +158,4 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
   );
 };
 
-export default CollectionForm;
+export default ProductForm;
