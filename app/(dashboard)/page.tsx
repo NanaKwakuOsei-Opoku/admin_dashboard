@@ -5,7 +5,7 @@ import {
   getSalesPerMonth,
   getTotalCustomers,
   getTotalSales,
-} from "@/lib/actions/actions";
+} from "@/lib/actions/action";
 import { CircleDollarSign, ShoppingBag, UserRound } from "lucide-react";
 
 export default async function Home() {

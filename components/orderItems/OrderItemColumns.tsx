@@ -31,3 +31,6 @@ export const columns: ColumnDef<OrderItemType>[] = [
     header: "Quantity",
   },
 ];
+
+
+export default columns;
