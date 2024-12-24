@@ -3,15 +3,15 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 
-import LeftSideBar from "@/components/Layout/Leftsidebar";
-import TopBar from "@/components/Layout/TopBar";
+import LeftSideBar from "@/components/layout/LeftSideBar";
+import TopBar from "@/components/layout/TopBar";
 import { ToasterProvider } from "@/lib/ToasterProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Borcelle - Admin Dashboard",
-  description: "Admin dashboard to manage Borcelle's data",
+  title: "Guitar Hub - Admin Dashboard",
+  description: "Admin dashboard to manage Guitar Hub data",
 };
 
 export default function RootLayout({

@@ -1,4 +1,4 @@
-import { connectToDB } from "@/lib/models/mongoDB";
+import { connectToDB } from "@/lib/mongoDB";
 import { getAuth } from "@clerk/nextjs/server";  // Changed to getAuth
 import { NextRequest, NextResponse } from "next/server";
 import Collection from "@/lib/models/Collection";
